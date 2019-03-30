@@ -24,6 +24,16 @@
                     <li>@Html.ActionLink("主页", "Index", "Home")</li>
                     <li>@Html.ActionLink("关于", "About", "Home")</li>
                 </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    @if (Session["UserID_Data"] == null)
+                    {
+                        <li>@Html.ActionLink("登录平台", "Login", "Api")</li>
+                    }
+                    else
+                    {
+                        <li>@Html.ActionLink("退出登录", "Logout", "Api")</li>
+                    }
+                </ul>
             </div>
         </div>
     </div>

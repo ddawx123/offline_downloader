@@ -7,7 +7,7 @@ $(document).ready(function () {
 function delobj(file) {
     $.ajax({
         url: "../Api/Delete",
-        method: "POST",
+        method: "DELETE",
         dataType: "json",
         data: {
             mFileName: file,
