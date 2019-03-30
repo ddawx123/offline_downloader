@@ -3,13 +3,38 @@
 }
 
 <div class="jumbotron">
-    <form action="#" method="post" role="form">
+    <form action="#" method="post" onsubmit="return sendrequest()" role="form">
         <div class="form-group">
             <label for="destination">所需下载的资源网址：</label>
             <input class="form-control" id="destination" name="destination" placeholder="请输入有效的网址" type="text" />
         </div>
         <p>
-            <button class="btn btn-success" type="submit">发起下载请求 &raquo;</button>
+            <button class="btn btn-success" id="startDL" type="submit">发起下载请求 &raquo;</button>
         </p>
     </form>
+    <table class="table" style="background-color: rgba(255, 229, 258, 0.50)">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>文件名称</th>
+                <th>文件大小</th>
+                <th>外链</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody id="fileListBox">
+            <!--
+            <tr>
+                <td>1</td>
+                <td>测试.txt</td>
+                <td>1.0M</td>
+                <td>下载</td>
+                <td><button class="btn btn-danger btn-sm" type="button">删除</button></td>
+            </tr>
+            -->
+        </tbody>
+    </table>
+    <div class="row">
+        <p id="notice" style="display: none; margin-top: 50px; padding: 40px; border-radius: 10px"></p>
+    </div>
 </div>

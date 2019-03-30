@@ -12,11 +12,32 @@ namespace OfflineDownloader.Controllers
 {
     public class ApiController : Controller
     {
+        public string Delete()
+        {
+            Response.ContentType = "application/json";
+            Response.Charset = "UTF-8";
+            if (Request.Form["mFileName"] == null || Request.Form["mFileName"].Trim().Equals(""))
+            {
+                return "{\"state\":\"require filename\"}";
+            }
+            try
+            {
+                System.IO.File.Delete(Server.MapPath("/") + @"Content\UserFiles\" + Path.GetFileName(Request.Form["mFileName"]));
+                return "{\"state\":\"success\"}";
+            }
+            catch
+            {
+                return "{\"state\":\"error\"}";
+            }
+        }
+
         /// <summary>
         /// 远程下载调用入口
         /// </summary>
         public string Download()
         {
+            Response.ContentType = "application/json";
+            Response.Charset = "UTF-8";
             if (Request.Form["destination"] == null || Request.Form["destination"].Trim().Equals(""))
             {
                 return "{\"state\":\"require destination\"}";
@@ -29,11 +50,11 @@ namespace OfflineDownloader.Controllers
                 Stream stream = httpWebResponse.GetResponseStream();
                 SaveBinaryFile(httpWebResponse, Server.MapPath("/") + @"Content\UserFiles\" + Path.GetFileName(Request.Form["destination"]));
                 stream.Close();
-                return Server.MapPath("/") + @"Content\UserFiles\" + Path.GetFileName(Request.Form["destination"]);
+                return "{\"state\":\"success\",\"msg\":\"" + Server.UrlEncode(Server.MapPath("/") + @"Content\UserFiles\" + Path.GetFileName(Request.Form["destination"])) + "\"}";
             }
             catch(Exception e)
             {
-                return "fail: " + e.Message;
+                return "{\"state\":\"error\",\"msg\":\"" + e.Message + "\"}";
             }
         }
 
@@ -56,6 +77,8 @@ namespace OfflineDownloader.Controllers
         // GET: Api
         public string Index()
         {
+            Response.ContentType = "text/plain";
+            Response.Charset = "UTF-8";
             return "API Running";
         }
 
